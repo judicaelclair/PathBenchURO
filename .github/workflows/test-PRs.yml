@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.8.5]
@@ -27,8 +27,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get install xvfb scrot
-        python -m pip install --upgrade pip
+        sudo apt-get install -y xvfb scrot gcc
+        python -m pip install --upgrade pip setuptools wheel
         pip install flake8 coverage
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f tests/requirements.txt ]; then pip install -r tests/requirements.txt; fi
@@ -40,5 +40,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run tests with coverage and upload
       run: |
-        coverage run tests/run_tests.py --cov-report=xml --spawn-display
-        bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -e PYTHON
+        CODECOV_EXEC="coverage run -p"
+        $CODECOV_EXEC tests/run_tests.py --spawn-display
+        ls -a
+        bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} -e PYTHON -f '.coverage.*'

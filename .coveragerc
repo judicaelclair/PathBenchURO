@@ -1,0 +1,9 @@
+[run]
+parallel = true
+include =
+  src/algorithms/classic/graph_based/*
+  *_manager.py
+  src/maps/*
+  src/simulator/*
+  src/structures/*
+  src/algorithms/configuration/*

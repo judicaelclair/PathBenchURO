@@ -1,20 +1,23 @@
-from algorithms.configuration.configuration import Configuration
-from algorithms.algorithm_manager import AlgorithmManager
-from maps.map_manager import MapManager
-from algorithms.lstm.trainer import Trainer
-from analyzer.analyzer import Analyzer
-from generator.generator import Generator
-from simulator.services.debug import DebugLevel
-from simulator.services.services import Services
-from simulator.simulator import Simulator
-from utility.misc import flatten
-from utility.argparse import add_configuration_flags
-
-import copy
 import sys
 import os
-import argparse
-from typing import List, Callable
+
+# Compatibility for running with codecov, add 'PathBench/src' to system path for module imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from algorithms.configuration.configuration import Configuration  # noqa: E402
+from algorithms.algorithm_manager import AlgorithmManager  # noqa: E402
+from maps.map_manager import MapManager  # noqa: E402
+from algorithms.lstm.trainer import Trainer  # noqa: E402
+from analyzer.analyzer import Analyzer  # noqa: E402
+from generator.generator import Generator  # noqa: E402
+from simulator.services.debug import DebugLevel  # noqa: E402
+from simulator.services.services import Services  # noqa: E402
+from simulator.simulator import Simulator  # noqa: E402
+from utility.misc import flatten  # noqa: E402
+from utility.argparse import add_configuration_flags  # noqa: E402
+
+import argparse  # noqa: E402
+from typing import List, Callable  # noqa: E402
 
 class MainRunner:
     main_services: Services

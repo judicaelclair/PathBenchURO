@@ -5,14 +5,17 @@ import atexit
 import unittest
 from unittest import TestLoader, TestSuite, TextTestRunner, TestResult
 
-from utils import make_src_modules_importable
+# Compatibility for running with codecov, add 'PathBench/tests' to system path for module imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from utils import make_src_modules_importable  # noqa: E402
 
 def run() -> bool:
     # add src folder to system path
     make_src_modules_importable()
 
     tests_path = os.path.dirname(os.path.abspath(__file__))
-    
+
     parser = argparse.ArgumentParser(prog="run_tests.py",
                                      description="PathBench test runner",
                                      formatter_class=argparse.RawTextHelpFormatter)
@@ -27,6 +30,7 @@ def run() -> bool:
     testRunner: TextTestRunner = unittest.TextTestRunner()
     res: TestResult = testRunner.run(tests)
     return (len(res.errors) == 0 and len(res.failures) == 0)
+
 
 if __name__ == '__main__':
     res = run()

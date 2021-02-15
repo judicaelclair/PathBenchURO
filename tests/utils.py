@@ -22,6 +22,9 @@ def handle_display_args(args) -> None:
     from utility.process import launch_process
     sys.path.pop(0) # remove src folder from path
 
+    if 'DISPLAY' not in os.environ:
+        args.spawn_display = ':99'
+
     if args.spawn_display:
         cmd = ["Xvfb", args.spawn_display, "-screen", "0", "2112x1376x24", "-fbdir", "/var/tmp"]
         if 'DISPLAY' in os.environ:
